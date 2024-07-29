@@ -5,6 +5,7 @@ from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
 
 import os
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"])
 CORS(app, resources={r"/api/*": {"origins": "*"}}) 
 CORS(app)  # Enable CORS for all routes # Enable CORS for the /api/* endpoints
 UPLOAD_FOLDER = 'uploads'
@@ -92,6 +93,7 @@ def upload_video():
 
     video_file.save(output_path)
     access_token = request.headers.get('Authorization')
+    print(f"Access token received: {access_token}")
     if not access_token:
         return jsonify({'error': 'No access token provided'}), 400
     
@@ -104,8 +106,7 @@ def upload_video():
     total_chunk_count = (video_size + chunk_size - 1) // chunk_size  # Ceiling division
 
     headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json; charset=UTF-8'
+        'Authorization': access_token,
     }
 
     data = {
@@ -123,7 +124,7 @@ def upload_video():
         response_data = response.json()
         upload_url = response_data['data']['upload_url']
 
-        with open(file_path, 'rb') as video_file:
+        with open(output_path, 'rb') as video_file:
             for chunk_index in range(total_chunk_count):
                 start_byte = chunk_index * chunk_size
                 end_byte = min(start_byte + chunk_size, video_size) - 1

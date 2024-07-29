@@ -4,7 +4,7 @@ import axios from "axios";
 const Login = () => {
   const getAuthenticationUrl = () => {
     const clientId = 'aw0h2vs3s39ad7dk'; 
-    const redirectUri = 'https://redirect-uri-tan.vercel.app/redirect'; 
+    const redirectUri = 'https://unsuperfluous-candi.000webhostapp.com/'; 
     const scope = 'user.info.basic,video.publish,video.upload'; 
     const state = ''; 
 

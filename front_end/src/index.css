@@ -16,3 +16,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* styles.css or in a <style> block */
+select option:hover {
+  background-color: #00F2EA; /* Use the same splash color */
+}
